@@ -7,12 +7,12 @@ namespace cell_world::sim {
 
         };
         struct Predator : cell_world::Stateful_agent<Predator_state> {
-            explicit Predator (const Static_data &);
+            explicit Predator (const Static_data &, const Cell &);
             cell_world::Move get_move(const Model_public_state &) override;
             cell_world::Agent_status_code update_state(const cell_world::Model_public_state &) override;
             const Cell &start_episode() override;
             const Static_data &data;
-            static cell_world::Agent_base &create(const Static_data &);
+            static cell_world::Agent_base &create(const Static_data &, const Cell &);
             static std::vector<Predator> predators;
             int prey_index;
             const Cell &start;

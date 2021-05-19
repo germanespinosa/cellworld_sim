@@ -8,8 +8,10 @@ using namespace std;
 
 int main(){
     Static_data data("world_0_0");
-    data.agents.push_back(Static_data::prey);
-    data.agents.push_back(Static_data::predator);
+    data.agents.emplace_back(Static_data::prey,data.map[{0,-7}]);
+    data.agents.emplace_back(Static_data::predator,data.map[{0,7}]);
+    data.burrow = data.map[{0,7}];
+    data.simulations = 5000;
     Simulation s(data);
     s.run();
     cout << "MAP :" << data.map.coordinates << endl;

@@ -4,19 +4,19 @@ using namespace std;
 
 namespace  cell_world::sim {
     std::vector<Predator> Predator::predators;
-    Agent_base &Predator::create(const Static_data &data) {
-        Predator::predators.emplace_back(data);
+    Agent_base &Predator::create(const Static_data &data, const Cell &start) {
+        Predator::predators.emplace_back(data, start);
         return *(--Predator::predators.end());
     }
 
-    Predator::Predator(const Static_data &data) :
+    Predator::Predator(const Static_data &data, const Cell &start) :
     data(data),
-    start(data.map[Coordinates{0,-7}])
+    start(start)
     {
         prey_index = Not_found;
         for (int i = 0;i<data.agents.size();i++ ){
-            auto agent_type = data.agents[i];
-            if (agent_type == Static_data::Agent_type::prey){
+            auto agent = data.agents[i];
+            if (agent.type == Static_data::Agent_type::prey){
                 prey_index = i;
             }
         }

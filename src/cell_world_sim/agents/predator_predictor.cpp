@@ -2,6 +2,12 @@
 
 using namespace std;
 namespace cell_world::sim{
+    vector<Predator_predictor> Predator_predictor::predators;
+
+    Agent_base &Predator_predictor::create(const Static_data &data) {
+        Predator_predictor::predators.emplace_back(data);
+        return *(--Prey::preys.end());
+    }
 
     cell_world::Move Predator_predictor::get_move(const Model_public_state &state) {
         auto &prey_location = state.agents_state[prey_index].cell;
@@ -25,8 +31,8 @@ namespace cell_world::sim{
             data(data){
         prey_index = Not_found;
         for (int i = 0;i<data.agents.size();i++ ){
-            auto agent_type = data.agents[i];
-            if (agent_type == Static_data::Agent_type::prey){
+            auto agent = data.agents[i];
+            if (agent.type == Static_data::Agent_type::prey){
                 prey_index = i;
             }
         }

@@ -26,9 +26,7 @@ namespace  cell_world::sim {
     }
 
     cell_world::Agent_status_code Prey::update_state(const Model_public_state &state) {
-        if (public_state().cell == goal) {
-            return Finished;
-        }
+        if (public_state().cell == goal) return Finished;
         return Running;
     }
 }

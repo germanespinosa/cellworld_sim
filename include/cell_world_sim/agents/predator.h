@@ -15,5 +15,6 @@ namespace cell_world::sim {
             static cell_world::Agent_base &create(const Static_data &);
             static std::vector<Predator> predators;
             int prey_index;
+            const Cell &start;
         };
     }

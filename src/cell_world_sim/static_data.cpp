@@ -14,7 +14,15 @@ cell_world::sim::Static_data::Static_data(const std::string &world_name) :
                     Web_resource::from("paths").key(world.name).key("astar").get()
             )
           )
-    )
-{
+    ),
+    graph(world.create_graph()),
+    visibility(
+            world.create_graph(
+                    Json_create<Graph_builder>(
+                            Web_resource::from("graph").key(world.name).key("visibility").get()
+                    )
+            )
+    ),
+    inverted_visibility(visibility.invert()){
 
 }

@@ -11,9 +11,11 @@ find_package(Cellworld_tools REQUIRED)
 
 set (cellworld_sim_files
         src/cell_world_sim/static_data.cpp
-        src/cell_world_sim/predator.cpp
         src/cell_world_sim/simulation.cpp
-        src/cell_world_sim/prey.cpp
+        src/cell_world_sim/agents/prey.cpp
+        src/cell_world_sim/agents/prey_predictor.cpp
+        src/cell_world_sim/agents/predator.cpp
+        src/cell_world_sim/agents/predator_predictor.cpp
         src/main.cpp  )
 
 add_library( cellworld_sim ${cellworld_sim_files})

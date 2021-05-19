@@ -13,6 +13,9 @@ namespace cell_world::sim {
         const cell_world::Cell_group cells;
         const cell_world::Map map;
         const cell_world::Paths paths;
+        const cell_world::Graph graph;
+        const cell_world::Graph visibility;
+        const cell_world::Graph inverted_visibility;
         std::vector<Agent_type> agents;
     };
 }

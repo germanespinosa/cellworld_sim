@@ -14,5 +14,7 @@ namespace cell_world::sim {
             const Static_data &data;
             static cell_world::Agent_base &create(const Static_data &);
             static std::vector<Prey> preys;
+            const Cell &start;
+            const Cell &goal;
         };
     }

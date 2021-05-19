@@ -1,4 +1,4 @@
-#include <cell_world_sim/prey.h>
+#include <cell_world_sim/agents/prey.h>
 
 using namespace cell_world;
 using namespace std;
@@ -10,26 +10,24 @@ namespace  cell_world::sim {
         return *(--Prey::preys.end());
     }
 
-    Prey::Prey(const Static_data &data) : data(data) {
-
+    Prey::Prey(const Static_data &data) :
+    data(data),
+    start(data.map[Coordinates{0,7}]),
+    goal(data.map[Coordinates{0,-7}]){
     }
 
     Move Prey::get_move(const Model_public_state &state) {
-        auto destination = data.map[Coordinates{0,-7}];
-        auto move = data.paths.get_move(public_state().cell, destination);
+        auto move = data.paths.get_move(public_state().cell, goal);
         cout << "Prey move: " << move << endl;
         return move;
     }
 
     const Cell &Prey::start_episode() {
-        auto &cell = data.map[Coordinates{0,7}];
-        cout << "Prey Starts: " << cell.coordinates << endl;
-        return cell;
+        return start;
     }
 
     cell_world::Agent_status_code Prey::update_state(const Model_public_state &state) {
-        cout << "Prey cell: " << public_state().cell.coordinates << " going to " << Coordinates{0,-7} <<endl;
-        if (public_state().cell.coordinates == Coordinates{0,-7}) {
+        if (public_state().cell == goal) {
             return Finished;
         }
         return Running;

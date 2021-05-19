@@ -9,6 +9,7 @@ namespace cell_world::sim {
         struct Prey : cell_world::Stateful_agent<Prey_state> {
             explicit Prey (const Static_data &);
             cell_world::Move get_move(const Model_public_state &) override;
+            cell_world::Agent_status_code update_state(const cell_world::Model_public_state &) override;
             const Cell &start_episode() override;
             const Static_data &data;
             static cell_world::Agent_base &create(const Static_data &);

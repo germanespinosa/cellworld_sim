@@ -15,12 +15,23 @@ namespace  cell_world::sim {
     }
 
     Move Prey::get_move(const Model_public_state &state) {
-        cout << "Prey Turn:" << state.agents_state[state.current_turn].iteration << endl;
-        return Move{0,0};
+        auto destination = data.map[Coordinates{0,-7}];
+        auto move = data.paths.get_move(public_state().cell, destination);
+        cout << "Prey move: " << move << endl;
+        return move;
     }
 
     const Cell &Prey::start_episode() {
-        cout << "Prey Starts" << endl;
-        return data.map[Coordinates{0,7}];
+        auto &cell = data.map[Coordinates{0,7}];
+        cout << "Prey Starts: " << cell.coordinates << endl;
+        return cell;
+    }
+
+    cell_world::Agent_status_code Prey::update_state(const Model_public_state &state) {
+        cout << "Prey cell: " << public_state().cell.coordinates << " going to " << Coordinates{0,-7} <<endl;
+        if (public_state().cell.coordinates == Coordinates{0,-7}) {
+            return Finished;
+        }
+        return Running;
     }
 }

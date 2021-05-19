@@ -18,7 +18,6 @@ namespace  cell_world::sim {
 
     Move Prey::get_move(const Model_public_state &state) {
         auto move = data.paths.get_move(public_state().cell, goal);
-        cout << "Prey move: " << move << endl;
         return move;
     }
 

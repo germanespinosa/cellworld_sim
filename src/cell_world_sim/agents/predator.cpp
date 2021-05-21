@@ -26,7 +26,6 @@ namespace  cell_world::sim {
     cell_world::Move Predator::get_move(const Model_public_state &state) {
         auto &prey_location = state.agents_state[prey_index].cell;
         auto move = data.paths.get_move(public_state().cell, prey_location);
-        cout << "Predator move: " << move <<  endl;
         return move;
     }
 

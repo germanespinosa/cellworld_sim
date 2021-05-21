@@ -5,7 +5,7 @@
 
 namespace cell_world::sim {
     struct Belief_state : std::vector<Model_state> {
-        Belief_state(Generative_model &, int);
+        Belief_state(Generative_model &, int, int);
         Model_state &random_particle();
         void filter();
         Generative_model &generative_model;

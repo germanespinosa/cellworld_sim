@@ -14,12 +14,9 @@ namespace cell_world::sim {
         explicit Generative_model(const Static_data &);
         void add_observer(Observer &);
         Model_state create_particle();
-        bool evolve(Move);
         bool evolve();
-        Observer observer();
+        Observer &observer();
         Static_data data;
         unsigned int observer_index;
-    private:
-        Move get_move(const Cell &, const Cell &);
     };
 }

@@ -2,19 +2,17 @@
 
 namespace cell_world::sim {
 
-    Belief_state::Belief_state(Generative_model &generative_model, int particle_count):
-    generative_model(generative_model), particle_count(particle_count){
-        for (int i=0;i<particle_count;i++){
+    Belief_state::Belief_state(Generative_model &generative_model, int particle_count, int max_tries):
+    generative_model(generative_model){
+        for (int i=0;i<max_tries;i++){
             push_back(generative_model.create_particle());
+            if (size() == particle_count) break;
         }
+        this->particle_count=size();
     }
 
     Model_state &Belief_state::random_particle() {
         return (*this)[Chance::dice(particle_count)];
-    }
-
-    void Belief_state::filter() {
-
     }
 
     void Belief_state::replace_particle(Model_state &particle) {
@@ -23,19 +21,9 @@ namespace cell_world::sim {
             particle = generative_model.create_particle();
             valid_particle = true;
             generative_model.set_state(particle);
-            for (int o=0;o<observations.size();o++){
-                auto &observation=observations[o];
-                if (observation.current_turn == generative_model.observer_index) {
-                    valid_particle = is_valid(particle, observation);
-                    if (valid_particle){
-                        generative_model.evolve(observer_moves[0]);
-                    }
-                } else {
-                    valid_particle = is_valid(particle, observation);
-                    if (valid_particle){
-                        generative_model.evolve();
-                    }
-                }
+            for (int o=0;o < observations.size() && is_valid(particle, observations[o]);o++){
+                generative_model.observer().set_move(observer_moves[o]);
+                generative_model.evolve();
             }
         }
     }
@@ -57,6 +45,7 @@ namespace cell_world::sim {
                     return false;
             }
         }
+        return true;
     }
 
     void Belief_state::record_observation(Model_public_state &observation) {
@@ -67,5 +56,8 @@ namespace cell_world::sim {
         }else{
             observer_moves.emplace_back(0,0);
         }
+        for (auto &particle:*this)
+            if (!is_valid(particle,observation))
+                replace_particle(particle);
     }
 }

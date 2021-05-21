@@ -28,16 +28,15 @@ namespace cell_world::sim {
         return state;
     }
 
-    bool Generative_model::evolve(Move move) {
-        if (state.public_state.current_turn != observer_index) throw logic_error("bad particle");
-        observer().set_move(std::move(move));
-        return update();
-    }
 
     bool Generative_model::evolve() {
-        auto next_agent = (observer_index + 1) % _agents.size();
-        if (state.public_state.current_turn != next_agent) throw logic_error("bad particle");
+        if (state.public_state.current_turn == observer_index)
+            return update();
         while ( state.public_state.current_turn != observer_index && update() );
-        return state.public_state.status == Running;
+        return state.public_state.status == Model_public_state::Status::Running;
+    }
+
+    Observer &Generative_model::observer() {
+        return (Observer &)_agents[observer_index];
     }
 }

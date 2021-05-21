@@ -2,6 +2,7 @@
 #include <cell_world.h>
 #include <cell_world_sim/static_data.h>
 #include <cell_world_sim/agents/predator_predictor.h>
+#include <cell_world_sim/belief_state.h>
 #include <cell_world_sim/generative_model.h>
 namespace cell_world::sim {
         struct Prey_state : Agent_internal_state {
@@ -16,10 +17,9 @@ namespace cell_world::sim {
             static std::vector<Prey> preys;
             const Cell &start;
             const Cell &goal;
-            Model generative_model;
+            Generative_model generative_model;
             int predator_index;
             double simulate (const Model_public_state &, const Cell &);
-            int update_particles(const Model_public_state &);
-            std::vector<Model_state> particles;
+            Belief_state belief_state;
         };
     }

@@ -26,7 +26,8 @@ namespace  cell_world::sim {
     data(data),
     start(start),
     goal(data.burrow),
-    generative_model(data.cells){
+    generative_model(data),
+    belief_state(generative_model, 100,1000){
         predator_index = Not_found;
         for (int i = 0; data.agents.size(); i++){
             auto agent = data.agents[i];
@@ -72,13 +73,6 @@ namespace  cell_world::sim {
     }
 
     double Prey::simulate(const Model_public_state &state, const Cell &option) {
-        return 0;
-    }
-
-    int Prey::update_particles(const Model_public_state &state) {
-        for (int i=0; data.agents.size();i++){
-            generative_model
-        }
         return 0;
     }
 }

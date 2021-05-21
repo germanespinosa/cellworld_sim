@@ -14,6 +14,7 @@ set (cellworld_sim_files
         src/cell_world_sim/simulation.cpp
         src/cell_world_sim/generative_model.cpp
         src/cell_world_sim/belief_state.cpp
+        src/cell_world_sim/forward_information_search.cpp
         src/cell_world_sim/agents/prey.cpp
         src/cell_world_sim/agents/prey_predictor.cpp
         src/cell_world_sim/agents/predator.cpp

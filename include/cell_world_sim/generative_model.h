@@ -1,10 +1,9 @@
 #pragma once
 #include <cell_world.h>
 #include <cell_world_sim/static_data.h>
-#include <cell_world_sim/agents/predator_predictor.h>
 
 namespace cell_world::sim {
-    struct Observer : Stateful_agent<Predictor_state> {
+    struct Observer : Stateless_agent {
         Move get_move(const Model_public_state &) override;
         void set_move(Move);
         Move next_move;

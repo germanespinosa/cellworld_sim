@@ -11,17 +11,22 @@ namespace cell_world::sim {
 
     Move Forward_information_search::get_best(Belief_state &belief_state) {
         auto &lppo_graph = generative_model.data.lppo;
-        auto &cell = belief_state[0].public_state.agents_state[generative_model.observer_index].cell;
+        auto cell = belief_state[0].public_state.agents_state[generative_model.observer_index].cell;
+        auto &observer = generative_model.observer();
         Decision_tree tree(lppo_graph, cell);
         for (unsigned int simulation = 0 ; simulation < simulation_count ; simulation){
             auto &particle = belief_state.random_particle();
             generative_model.set_state(particle);
+            auto &current_cell = generative_model.observer().public_state().cell;
             while (generative_model.state.public_state.status == Model_public_state::Running) {
                 tree.expansion();
                 tree.selection();
                 auto &destination = tree.current->cell;
-                while (generative_model.observer().public_state().cell != destination
-                        && generative_model.evolve());
+                while (current_cell != destination
+                        && generative_model.evolve()){
+                    auto move = generative_model.data.paths.get_move(current_cell,destination);
+                    observer.set_move(move);
+                }
             }
         }
         return  generative_model.data.paths.get_move(cell, tree.best().cell);

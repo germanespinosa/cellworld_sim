@@ -37,6 +37,6 @@ namespace cell_world::sim {
     }
 
     Observer &Generative_model::observer() {
-        return (Observer &)_agents[observer_index];
+        return (Observer &) (Agent_base &) _agents[observer_index];
     }
 }

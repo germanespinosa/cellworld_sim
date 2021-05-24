@@ -30,9 +30,7 @@ namespace cell_world::sim {
     Decision_tree::Decision_tree(const Graph &lppo, const Cell &root):
         lppo(lppo),
         current(this),
-        Decision_tree_node(nullptr, root) {
-
-    }
+        Decision_tree_node(nullptr, root) {}
 
     void Decision_tree::expansion() {
         auto &options = lppo[current->cell];
@@ -62,7 +60,7 @@ namespace cell_world::sim {
         double c = 1; // exploitation vs exploration (0 = no exploration)
         int selected_child;
         double max_ubc1;
-        for (int child_index=0; child_index<children.size(); child_index++) {
+        for (int child_index = 0; child_index < children.size(); child_index++) {
             double ni = children[child_index].count;
             double exploitation = children[child_index].reward; // wi/ni
             double exploration = sqrt(lnNi/ni);

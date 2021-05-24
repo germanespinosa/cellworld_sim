@@ -1,6 +1,5 @@
 #pragma once
 #include <cell_world.h>
-#include <cell_world_sim/static_data.h>
 #include <cell_world_sim/generative_model.h>
 
 namespace cell_world::sim {
